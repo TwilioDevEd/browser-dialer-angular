@@ -7,6 +7,7 @@ const twilio = require('twilio');
 const randomUsername = require('./randos');
 
 let app = express();
+app.use('/node_modules', express.static(__dirname + '/node_modules'));
 app.use(express.static(__dirname + '/public'));
 app.use(urlencoded({ extended: false }));
 
