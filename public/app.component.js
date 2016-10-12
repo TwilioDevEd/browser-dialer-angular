@@ -27,10 +27,28 @@
       <!-- Telephone input field -->
       <input value="{{ currentNumber }}" type="tel" class="form-control" placeholder="555-666-7777">
     </div>
+
+    <!-- Audio Controls -->
+    <div class="controls">
+      <button class="btn btn-circle" 
+          [ngClass]="{'btn-danger': onPhone, 'btn-success': !onPhone}"
+          (click)="toggleCall()">
+        <i class="fa fa-fw"
+            [ngClass]="{'fa-close': onPhone, 'fa-phone': !onPhone}"></i>
+      </button>
+      <button class="btn btn-circle btn-default"
+          *ngIf="onPhone" (click)="toggleMute()">
+        <i class="fa fa-fw"
+            [ngClass]="{'fa-microphone-slash': muted, 'fa-microphone': !muted}"></i>
+      </button>
+    </div>
+
   </div>`
     })
     .Class({
       constructor: function() {
+        this.onPhone = false;
+        this.muted = false;
         this.currentNumber = '';
         this.selectedCountryCode = '1';
         this.countries = [
@@ -49,6 +67,12 @@
       },
       selectCountry: function(country) {
         this.selectedCountryCode = country.cc;
-      }
+      },
+      toggleCall: function() {
+        this.onPhone = !this.onPhone;
+      },
+      toggleMute: function() {
+        this.muted = !this.muted;
+      },
     });
 })(window.app || (window.app = {}));
