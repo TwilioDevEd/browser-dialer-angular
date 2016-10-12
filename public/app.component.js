@@ -23,11 +23,15 @@
           </li>
         </ul>
       </div>
+
+      <!-- Telephone input field -->
+      <input value="{{ currentNumber }}" type="tel" class="form-control" placeholder="555-666-7777">
     </div>
   </div>`
     })
     .Class({
       constructor: function() {
+        this.currentNumber = '';
         this.selectedCountryCode = '1';
         this.countries = [
           { name: 'United States', cc: '1', code: 'us' },
