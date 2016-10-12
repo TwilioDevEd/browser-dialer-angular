@@ -24,8 +24,48 @@
         </ul>
       </div>
 
+      <!-- DTMF Tone interface -->
+      <div class="keys" *ngIf="onPhone">
+        <div class="key-row">
+          <button class="btn btn-circle btn-default" (click)="sendDigit('1')">1</button>
+          <button class="btn btn-circle btn-default" (click)="sendDigit('2')">2
+            <span>A B C</span>
+          </button>
+          <button class="btn btn-circle btn-default" (click)="sendDigit('3')">3
+            <span>D E F</span>
+          </button>
+        </div>
+        <div class="key-row">
+          <button class="btn btn-circle btn-default" (click)="sendDigit('4')">4
+            <span>G H I</span>
+          </button>
+          <button class="btn btn-circle btn-default" (click)="sendDigit('5')">5
+            <span>J K L</span>
+          </button>
+          <button class="btn btn-circle btn-default" (click)="sendDigit('6')">6
+            <span>M N O</span>
+          </button>
+        </div>
+        <div class="key-row">
+          <button class="btn btn-circle btn-default" (click)="sendDigit('7')">7
+            <span>P Q R S</span>
+          </button>
+          <button class="btn btn-circle btn-default" (click)="sendDigit('8')">8
+            <span>T U V</span>
+          </button>
+          <button class="btn btn-circle btn-default" (click)="sendDigit('9')">9
+            <span>W X Y Z</span>
+          </button>
+        </div>
+        <div class="key-row">
+          <button class="btn btn-circle btn-default" (click)="sendDigit('*')">*</button>
+          <button class="btn btn-circle btn-default" (click)="sendDigit('0')">0</button>
+          <button class="btn btn-circle btn-default" (click)="sendDigit('#')">#</button>
+        </div>
+      </div>
+
       <!-- Telephone input field -->
-      <input value="{{ currentNumber }}" type="tel" class="form-control" placeholder="555-666-7777">
+      <input (keyup)="onNumberKeyUp($event)" type="tel" class="form-control" placeholder="555-666-7777">
     </div>
 
     <!-- Audio Controls -->
@@ -43,6 +83,10 @@
       </button>
     </div>
 
+    <!-- Status logging -->
+    <div class="log">{{ logtext }}</div>
+    <p>{{ identity }}</p>
+
   </div>`
     })
     .Class({
@@ -50,6 +94,7 @@
         this.onPhone = false;
         this.muted = false;
         this.currentNumber = '';
+        this.isValidNumber = false;
         this.selectedCountryCode = '1';
         this.countries = [
           { name: 'United States', cc: '1', code: 'us' },
@@ -64,15 +109,69 @@
           { name: 'Spain', cc: '34', code: 'es' },
           { name: 'Brazil', cc: '55', code: 'br' },
         ];
+
+        var self = this;
+
+        // Fetch Twilio capability token from our Node.js server
+        $.getJSON('/token').done(function(data) {
+          self.identity = data.identity;
+          Twilio.Device.setup(data.token);
+          self.logtext = `Connected with generated client name "${self.identity}"`;
+          console.log(self.logtext);
+        }).fail(function(err) {
+          console.log(err);
+          self.logtext = 'Could not fetch token, see console.log';
+        });
+
+        // Configure event handlers for Twilio Device
+        Twilio.Device.disconnect(function() {
+          self.onPhone = false;
+          self.logtext = 'Call ended.';
+        });
+
       },
+
+      // Handle numeric buttons
+      sendDigit: function(digit) {
+        Twilio.Device.activeConnection().sendDigits(digit);
+      },
+
+      // Handle number key up event
+      onNumberKeyUp: function(event) {
+        this.currentNumber = event.target.value;
+        this.isValidNumber = /^([0-9]|#|\*)+$/.test(this.currentNumber.replace(/[-()\s]/g,''));
+      },
+
+      // Handle country code selection
       selectCountry: function(country) {
         this.selectedCountryCode = country.cc;
       },
+      
+      // Make an outbound call with the current number,
+      // or hang up the current call
       toggleCall: function() {
-        this.onPhone = !this.onPhone;
+        if (!this.onPhone) {
+          this.onPhone = true;
+          this.muted = false;
+
+          // make outbound call with current number
+          console.log(this.currentNumber);
+          var n = '+' + this.selectedCountryCode + this.currentNumber.replace(/\D/g, '');
+          Twilio.Device.connect({ number: n });
+          this.logtext = 'Calling ' + n;
+        } else {
+          // hang up call in progress
+          Twilio.Device.disconnectAll();
+        }
+
       },
+
+      // Handle muting
       toggleMute: function() {
-        this.muted = !this.muted;
+        var muted = muted;
+        this.muted = !muted;
+
+        Twilio.Device.activeConnection().mute(!muted);
       },
     });
 })(window.app || (window.app = {}));
