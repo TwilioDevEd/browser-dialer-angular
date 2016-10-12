@@ -2,8 +2,8 @@
   <img src="https://static0.twilio.com/marketing/bundles/marketing/img/logos/wordmark-red.svg" alt="Twilio" width="250" />
 </a>
 
-# Browser Dialer - React
-[![Build Status](https://travis-ci.org/TwilioDevEd/browser-dialer-react.svg?branch=master)](https://travis-ci.org/TwilioDevEd/browser-dialer-react)
+# Browser Dialer - Angular
+[![Build Status](https://travis-ci.org/TwilioDevEd/browser-dialer-angular.svg?branch=master)](https://travis-ci.org/TwilioDevEd/browser-dialer-angular)
 
 ### Prerequisites
 
@@ -19,8 +19,8 @@
 1. First clone this repository and `cd` into it.
 
    ```
-   $ git clone git@github.com:TwilioDevEd/browser-dialer-react.git
-   $ cd browser-dialer-react
+   $ git clone git@github.com:TwilioDevEd/browser-dialer-angular.git
+   $ cd browser-dialer-angular
    ```
 
 1. Copy the sample configuration file and edit it to match your configuration.
@@ -56,7 +56,7 @@
    this:
 
    ```
-   http://<your-ngrok-subdomain/voice
+   http://<your-ngrok-subdomain>/voice
    ```
 
 ## Meta
