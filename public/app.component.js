@@ -54,11 +54,6 @@
         this.isValidNumber = event.isValid;
       },
 
-      // Handle country code selection
-      selectCountry: function(country) {
-        this.selectedCountryCode = country.cc;
-      },
-      
       // Make an outbound call with the current number,
       // or hang up the current call
       toggleCall: function() {
