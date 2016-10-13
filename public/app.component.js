@@ -32,13 +32,14 @@
     <audio-controls [onPhone]="onPhone" [muted]="muted" [disabled]="!isValidNumber"
         (onClickCall)="toggleCall()" (onClickMute)="toggleMute()"></audio-controls>
 
-    <dtmf *ngIf="onPhone"></dtmf>
+    <dtmf *ngIf="onPhone" (onDigitClick)="sendDigit($event)"></dtmf>
 
     <statuslog [status]="logtext" [summary]="identity"></statuslog>
 
   </div>`
     })
     .Class({
+
       constructor: function() {
         this.onPhone = false;
         this.muted = false;
@@ -119,6 +120,7 @@
         this.muted = !this.muted;
 
         Twilio.Device.activeConnection().mute(this.muted);
-      },
+      }
+
     });
 })(window.app || (window.app = {}));
