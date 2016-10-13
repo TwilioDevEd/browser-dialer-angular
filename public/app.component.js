@@ -21,7 +21,9 @@
         this.onPhone = false;
         this.muted = false;
         this.isValidNumber = false;
-        
+      },
+
+      ngOnInit: function() {
         var self = this;
 
         // Fetch Twilio capability token from our Node.js server
@@ -43,12 +45,12 @@
 
       },
 
-      // Handle numeric buttons
+      // Handle numeric buttons event
       sendDigit: function(digit) {
         Twilio.Device.activeConnection().sendDigits(digit);
       },
 
-      // Handle number key up event
+      // Handle number change event
       handleChangeNumber: function(event) {
         this.fullNumber = event.fullNumber;
         this.isValidNumber = event.isValid;
