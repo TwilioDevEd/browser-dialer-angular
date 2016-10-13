@@ -2,7 +2,8 @@
   app.AppModule =
     ng.core.NgModule({
       imports: [ ng.platformBrowser.BrowserModule ],
-      declarations: [ app.AppComponent, app.DtmfComponent, app.StatusLogComponent, app.AudioComponent ],
+      declarations: [ app.AppComponent, app.DtmfComponent, 
+          app.StatusLogComponent, app.AudioComponent, app.DialerInputComponent ],
       bootstrap: [ app.AppComponent ]
     })
     .Class({
