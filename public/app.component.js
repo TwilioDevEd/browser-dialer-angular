@@ -44,12 +44,9 @@
       </button>
     </div>
 
-    <!-- DTMF Tone interface -->
     <dtmf *ngIf="onPhone"></dtmf>
 
-    <!-- Status logging -->
-    <div class="log">{{ logtext }}</div>
-    <p>{{ identity }}</p>
+    <statuslog [status]="logtext" [summary]="identity"></statuslog>
 
   </div>`
     })
