@@ -2,7 +2,7 @@
   app.AppModule =
     ng.core.NgModule({
       imports: [ ng.platformBrowser.BrowserModule ],
-      declarations: [ app.AppComponent ],
+      declarations: [ app.AppComponent, app.DtmfComponent ],
       bootstrap: [ app.AppComponent ]
     })
     .Class({
