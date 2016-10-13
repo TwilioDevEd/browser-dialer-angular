@@ -29,20 +29,8 @@
           (keyup)="onNumberKeyUp($event)">
     </div>
 
-    <!-- Audio Controls -->
-    <div class="controls">
-      <button class="btn btn-circle" 
-          [ngClass]="{'btn-danger': onPhone, 'btn-success': !onPhone}"
-          (click)="toggleCall()" [disabled]="!isValidNumber">
-        <i class="fa fa-fw"
-            [ngClass]="{'fa-close': onPhone, 'fa-phone': !onPhone}"></i>
-      </button>
-      <button class="btn btn-circle btn-default"
-          *ngIf="onPhone" (click)="toggleMute()">
-        <i class="fa fa-fw"
-            [ngClass]="{'fa-microphone-slash': muted, 'fa-microphone': !muted}"></i>
-      </button>
-    </div>
+    <audio-controls [onPhone]="onPhone" [muted]="muted" [disabled]="!isValidNumber"
+        (onClickCall)="toggleCall()" (onClickMute)="toggleMute()"></audio-controls>
 
     <dtmf *ngIf="onPhone"></dtmf>
 
