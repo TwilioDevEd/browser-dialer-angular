@@ -65,14 +65,15 @@
       </div>
 
       <!-- Telephone input field -->
-      <input (keyup)="onNumberKeyUp($event)" type="tel" class="form-control" placeholder="555-666-7777">
+      <input type="tel" class="form-control" placeholder="555-666-7777"
+          (keyup)="onNumberKeyUp($event)">
     </div>
 
     <!-- Audio Controls -->
     <div class="controls">
       <button class="btn btn-circle" 
           [ngClass]="{'btn-danger': onPhone, 'btn-success': !onPhone}"
-          (click)="toggleCall()">
+          (click)="toggleCall()" [disabled]="!isValidNumber">
         <i class="fa fa-fw"
             [ngClass]="{'fa-close': onPhone, 'fa-phone': !onPhone}"></i>
       </button>
