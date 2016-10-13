@@ -169,10 +169,9 @@
 
       // Handle muting
       toggleMute: function() {
-        var muted = muted;
-        this.muted = !muted;
+        this.muted = !this.muted;
 
-        Twilio.Device.activeConnection().mute(!muted);
+        Twilio.Device.activeConnection().mute(this.muted);
       },
     });
 })(window.app || (window.app = {}));
