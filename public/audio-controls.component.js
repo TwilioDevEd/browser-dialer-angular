@@ -1,5 +1,5 @@
 (function(app) {
-  app.AudioComponent =
+  app.AudioControlsComponent =
     ng.core.Component({
       selector: 'audio-controls',
       inputs: ['onPhone', 'disabled', 'muted'],

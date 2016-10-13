@@ -3,7 +3,8 @@
     ng.core.NgModule({
       imports: [ ng.platformBrowser.BrowserModule ],
       declarations: [ app.AppComponent, app.DtmfComponent, 
-          app.StatusLogComponent, app.AudioComponent, app.DialerInputComponent ],
+          app.StatusLogComponent, app.AudioControlsComponent,
+          app.DialerInputComponent ],
       bootstrap: [ app.AppComponent ]
     })
     .Class({
