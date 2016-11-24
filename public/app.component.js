@@ -11,7 +11,7 @@
 
     <dtmf *ngIf="onPhone" (onDigitClick)="sendDigit($event)"></dtmf>
 
-    <statuslog [status]="logtext" [summary]="identity"></statuslog>
+    <statuslog [status]="logtext" ></statuslog>
 
   </div>`
     })
@@ -28,10 +28,7 @@
 
         // Fetch Twilio capability token from our Node.js server
         $.getJSON('/token').done(function(data) {
-          self.identity = data.identity;
           Twilio.Device.setup(data.token);
-          self.logtext = `Connected with generated client name "${self.identity}"`;
-          console.log(self.logtext);
         }).fail(function(err) {
           console.log(err);
           self.logtext = 'Could not fetch token, see console.log';
@@ -43,6 +40,9 @@
           self.logtext = 'Call ended.';
         });
 
+        Twilio.Device.ready(function() {
+          self.logtext = 'Connected';
+        });
       },
 
       // Handle numeric buttons event
@@ -63,13 +63,12 @@
           this.onPhone = true;
           this.muted = false;
 
-          Twilio.Device.connect({ number: this.fullNumber });
+          Twilio.Device.connect({number: this.fullNumber});
           this.logtext = `Calling ${this.fullNumber}`;
         } else {
           // hang up call in progress
           Twilio.Device.disconnectAll();
         }
-
       },
 
       // Handle muting
@@ -77,7 +76,7 @@
         this.muted = !this.muted;
 
         Twilio.Device.activeConnection().mute(this.muted);
-      }
+    },
 
     });
 })(window.app || (window.app = {}));
