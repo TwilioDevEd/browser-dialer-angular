@@ -28,10 +28,10 @@
 
         // Fetch Twilio capability token from our Node.js server
         $.getJSON('/token').done(function(data) {
-          self.identity = data.identity;
+
           Twilio.Device.setup(data.token);
-          self.logtext = `Connected with generated client name "${self.identity}"`;
-          console.log(self.logtext);
+
+
         }).fail(function(err) {
           console.log(err);
           self.logtext = 'Could not fetch token, see console.log';
@@ -70,6 +70,9 @@
           Twilio.Device.disconnectAll();
         }
 
+          Twilio.Device.ready(() => {
+            self.log = 'Connected';
+          });
       },
 
       // Handle muting
