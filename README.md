@@ -18,7 +18,7 @@
 
 1. First clone this repository and `cd` into it.
 
-   ```
+   ```bash
    $ git clone git@github.com:TwilioDevEd/browser-dialer-angular.git
    $ cd browser-dialer-angular
    ```
@@ -30,8 +30,8 @@
   ```
 
  You can find your `TWILIO_ACCOUNT_SID` and `TWILIO_AUTH_TOKEN` in your
- [Twilio Account Settings](https://www.twilio.com/user/account/settings).
- You will also need a `TWILIO_NUMBER`, which you may find [here](https://www.twilio.com/user/account/phone-numbers/incoming), and you may find your `TWILIO_TWIML_APP_SID` [here](https://www.twilio.com/console/voice/dev-tools/twiml-apps).
+ [Twilio Account Settings](https://www.twilio.com/console).
+ You will also need a `TWILIO_NUMBER`, which you may find [here](https://www.twilio.com/console/phone-numbers/incoming), and you may find your `TWILIO_TWIML_APP_SID` [here](https://www.twilio.com/console/voice/dev-tools/twiml-apps).
 
 1. Install dependencies.
 
