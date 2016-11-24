@@ -11,30 +11,31 @@
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.15.2",
+    "dotenv-safe": "^3.0.0",
     "express": "^4.14.0",
-    "twilio": "^2.11.0",
+    "twilio": "3.0.0-rc.13",
 
-    "@angular/common": "~2.0.1",
-    "@angular/compiler": "~2.0.1",
-    "@angular/core": "~2.0.1",
-    "@angular/forms": "~2.0.1",
-    "@angular/http": "~2.0.1",
-    "@angular/platform-browser": "~2.0.1",
-    "@angular/platform-browser-dynamic": "~2.0.1",
-    "@angular/router": "~3.0.1",
-    "@angular/upgrade": "~2.0.1",
+    "@angular/common": "~2.2.3",
+    "@angular/compiler": "~2.2.3",
+    "@angular/core": "~2.2.3",
+    "@angular/forms": "~2.2.3",
+    "@angular/http": "~2.2.3",
+    "@angular/platform-browser": "~2.2.3",
+    "@angular/platform-browser-dynamic": "~2.2.3",
+    "@angular/router": "~3.2.3",
+    "@angular/upgrade": "~2.2.3",
 
-    "angular-in-memory-web-api": "~0.1.1",
+    "angular-in-memory-web-api": "~0.1.16",
     "bootstrap": "^3.3.7",
     "core-js": "^2.4.1",
     "reflect-metadata": "^0.1.8",
-    "rxjs": "5.0.0-beta.12",
-    "zone.js": "^0.6.25"
+    "rxjs": "5.0.0-rc.4",
+    "zone.js": "^0.7.2"
   },
   "devDependencies": {
     "chai": "^3.5.0",
     "cheerio": "^0.22.0",
-    "mocha": "^3.1.0",
-    "supertest": "^2.0.0"
+    "mocha": "^3.1.2",
+    "supertest": "^2.0.1"
   }
 }
