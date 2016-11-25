@@ -28,10 +28,7 @@
 
         // Fetch Twilio capability token from our Node.js server
         $.getJSON('/token').done(function(data) {
-
           Twilio.Device.setup(data.token);
-
-
         }).fail(function(err) {
           console.log(err);
           self.logtext = 'Could not fetch token, see console.log';
@@ -42,7 +39,6 @@
           self.onPhone = false;
           self.logtext = 'Call ended.';
         });
-
       },
 
       // Handle numeric buttons event
@@ -70,17 +66,15 @@
           Twilio.Device.disconnectAll();
         }
 
-          Twilio.Device.ready(() => {
-            self.log = 'Connected';
-          });
+        Twilio.Device.ready(() => {
+          self.log = 'Connected';
+        });
       },
 
       // Handle muting
       toggleMute: function() {
         this.muted = !this.muted;
-
         Twilio.Device.activeConnection().mute(this.muted);
       }
-
     });
 })(window.app || (window.app = {}));
