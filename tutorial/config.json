@@ -1,0 +1,6 @@
+{
+    "title": "Browser Dialer with Twilio and Angular.js",
+    "repo": "TwilioDevEd/browser-dialer-angular",
+    "description": "Learn to implement a browser dialer application using the Twilio.js library and Angular.js",
+    "heroku": false
+}
