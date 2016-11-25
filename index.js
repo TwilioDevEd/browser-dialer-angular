@@ -33,6 +33,7 @@ app.post('/voice', (request, response) => {
   twiml.dial(request.body.number, {
     callerId: process.env.TWILIO_NUMBER,
   });
+
   response.type('text/xml');
   response.send(twiml.toString());
 });

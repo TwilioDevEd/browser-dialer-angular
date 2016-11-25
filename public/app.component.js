@@ -69,14 +69,16 @@
           // hang up call in progress
           Twilio.Device.disconnectAll();
         }
+
+        Twilio.Device.ready(() => {
+          self.log = 'Connected';
+        });
       },
 
       // Handle muting
       toggleMute: function() {
         this.muted = !this.muted;
-
         Twilio.Device.activeConnection().mute(this.muted);
-    },
-
+      },
     });
 })(window.app || (window.app = {}));
