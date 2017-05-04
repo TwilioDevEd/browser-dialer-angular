@@ -4,6 +4,8 @@ const http = require('http');
 const express = require('express');
 const {urlencoded} = require('body-parser');
 const twilio = require('twilio');
+const ClientCapability = twilio.jwt.ClientCapability;
+const VoiceResponse = twilio.twiml.VoiceResponse;
 
 
 const app = express();
@@ -13,13 +15,17 @@ app.use(urlencoded({extended: false}));
 
 // Generate a Twilio Client capability token
 app.get('/token', (request, response) => {
-  const capability = new twilio.jwt.Capability(
-    process.env.TWILIO_ACCOUNT_SID,
-    process.env.TWILIO_AUTH_TOKEN
-  );
-  capability.allowClientOutgoing(process.env.TWILIO_TWIML_APP_SID);
+  const capability = new ClientCapability({
+    accountSid: process.env.TWILIO_ACCOUNT_SID,
+    authToken: process.env.TWILIO_AUTH_TOKEN
+  });
 
-  const token = capability.generate();
+  capability.addScope(
+    new ClientCapability.OutgoingClientScope({
+      applicationSid: process.env.TWILIO_TWIML_APP_SID})
+  );
+
+  const token = capability.toJwt();
 
   // Include token in a JSON response
   response.send({
@@ -29,13 +35,13 @@ app.get('/token', (request, response) => {
 
 // Create TwiML for outbound calls
 app.post('/voice', (request, response) => {
-  const twiml = new twilio.TwimlResponse();
-  twiml.dial(request.body.number, {
+  const voiceResponse = new VoiceResponse();
+  voiceResponse.dial({
     callerId: process.env.TWILIO_NUMBER,
-  });
+  }, request.body.number);
 
   response.type('text/xml');
-  response.send(twiml.toString());
+  response.send(voiceResponse.toString());
 });
 
 const server = http.createServer(app);
