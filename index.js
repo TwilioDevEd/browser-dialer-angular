@@ -1,44 +1,51 @@
 'use strict';
-
+require('dotenv-safe').load();
 const http = require('http');
 const express = require('express');
-const { urlencoded } = require('body-parser');
+const {urlencoded} = require('body-parser');
 const twilio = require('twilio');
+const ClientCapability = twilio.jwt.ClientCapability;
+const VoiceResponse = twilio.twiml.VoiceResponse;
 
-let app = express();
+
+const app = express();
 app.use('/node_modules', express.static(__dirname + '/node_modules'));
 app.use(express.static(__dirname + '/public'));
-app.use(urlencoded({ extended: false }));
+app.use(urlencoded({extended: false}));
 
 // Generate a Twilio Client capability token
 app.get('/token', (request, response) => {
-  let capability = new twilio.Capability(
-    process.env.TWILIO_ACCOUNT_SID,
-    process.env.TWILIO_AUTH_TOKEN
-  );
-  capability.allowClientOutgoing(process.env.TWILIO_TWIML_APP_SID);
+  const capability = new ClientCapability({
+    accountSid: process.env.TWILIO_ACCOUNT_SID,
+    authToken: process.env.TWILIO_AUTH_TOKEN
+  });
 
-  let token = capability.generate();
+  capability.addScope(
+    new ClientCapability.OutgoingClientScope({
+      applicationSid: process.env.TWILIO_TWIML_APP_SID})
+  );
+
+  const token = capability.toJwt();
 
   // Include token in a JSON response
   response.send({
-    token: token
+    token: token,
   });
 });
 
 // Create TwiML for outbound calls
 app.post('/voice', (request, response) => {
-  let twiml = new twilio.TwimlResponse();
-  twiml.dial(request.body.number, {
-    callerId: process.env.TWILIO_NUMBER
-  });
+  const voiceResponse = new VoiceResponse();
+  voiceResponse.dial({
+    callerId: process.env.TWILIO_NUMBER,
+  }, request.body.number);
 
   response.type('text/xml');
-  response.send(twiml.toString());
+  response.send(voiceResponse.toString());
 });
 
-let server = http.createServer(app);
-let port = process.env.PORT || 3000;
+const server = http.createServer(app);
+const port = process.env.PORT || 3000;
 server.listen(port, () => {
   console.log(`Express Server listening on *:${port}`);
 });

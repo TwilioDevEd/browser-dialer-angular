@@ -11,7 +11,7 @@
 
     <dtmf *ngIf="onPhone" (onDigitClick)="sendDigit($event)"></dtmf>
 
-    <statuslog [status]="logtext" [summary]="identity"></statuslog>
+    <statuslog [status]="logtext" ></statuslog>
 
   </div>`
     })
@@ -39,6 +39,10 @@
           self.onPhone = false;
           self.logtext = 'Call ended.';
         });
+
+        Twilio.Device.ready(function() {
+          self.logtext = 'Connected';
+        });
       },
 
       // Handle numeric buttons event
@@ -59,7 +63,7 @@
           this.onPhone = true;
           this.muted = false;
 
-          Twilio.Device.connect({ number: this.fullNumber });
+          Twilio.Device.connect({number: this.fullNumber});
           this.logtext = `Calling ${this.fullNumber}`;
         } else {
           // hang up call in progress
@@ -75,6 +79,6 @@
       toggleMute: function() {
         this.muted = !this.muted;
         Twilio.Device.activeConnection().mute(this.muted);
-      }
+      },
     });
 })(window.app || (window.app = {}));
