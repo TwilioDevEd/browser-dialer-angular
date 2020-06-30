@@ -30,7 +30,7 @@
     "core-js": "^2.4.1",
     "reflect-metadata": "^0.1.8",
     "rxjs": "5.0.0-rc.4",
-    "zone.js": "^0.7.2"
+    "zone.js": "^0.10.3"
   },
   "devDependencies": {
     "chai": "^3.5.0",
