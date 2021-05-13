@@ -22,7 +22,7 @@
     "@angular/http": "~2.2.3",
     "@angular/platform-browser": "~2.2.3",
     "@angular/platform-browser-dynamic": "~2.2.3",
-    "@angular/router": "~3.2.3",
+    "@angular/router": "~12.0.0",
     "@angular/upgrade": "~2.2.3",
 
     "angular-in-memory-web-api": "~0.1.16",
